@@ -1,36 +1,45 @@
-import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useLoaderData, useNavigation } from 'react-router-dom';
 import axios from 'axios';
 
 export const UserDetail = () => {
-    const { nim } = useParams();
-    const [user, setUser] = useState(null);
+  const navigation = useNavigation();
+  const user = useLoaderData();
 
-    useEffect(() => {
-        const fetchUser = async () => {
-            try {
-                const response = await axios.get(`http://localhost:3002/v1/users/${nim}`);
-                setUser(response.data.data);
-            } catch (error) {
-                console.log(error.message);
-            }
-        };
+  // Memberikan loading state ketika data sedang di-load
+  if (navigation.state === 'loading') {
+    return <h1>Loading!</h1>;
+  }
 
-        fetchUser();
-    }, [nim]);
+  // Memberikan error handling ketika user tidak ditemukan
+  if (user.status == 'Error') {
+    return <div>Error - {user.message}</div>;
+  }
 
-    if (!user) {
-        return <div>Loading...</div>;
-    }
-
-    return (
-        <div className="user-detail">
-            <h2 className='text-3xl font-bold'>{user.nama}</h2>
-            <p>NIM : {user.nim}</p>
-            <p>Divisi : {user.divisi}</p>
-            <p>Email : {user.email}</p>
-            <p>Angkatan : {user.angkatan}</p>
-            <img src={user.foto} alt="" />
+  return (
+    <>
+      <div className='flex gap-5'>
+        <img src={user.foto} alt='foto user' className='h-48 rounded' />
+        <div className='flex flex-col gap-2'>
+          <h2 className='text-3xl font-bold'>{user.nama}</h2>
+          <p>NIM : {user.nim}</p>
+          <p>Divisi : {user.divisi}</p>
+          <p>Email : {user.email}</p>
+          <p>Angkatan : {user.angkatan}</p>
         </div>
-    );
+      </div>
+      <div className='mt-6 underline'>
+        <Link to='..'>Kembali</Link>
+      </div>
+    </>
+  );
+};
+
+export const userDetailLoader = async (nim) => {
+  try {
+    const response = await axios.get(`http://localhost:3002/v1/users/${nim}`);
+    return response.data.data;
+  } catch (error) {
+    const err = error.response.data;
+    return err;
+  }
 };

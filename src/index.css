@@ -1,3 +1,24 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+header nav a {
+  text-decoration: none;
+  @apply px-4 py-2 rounded hover:bg-black hover:bg-opacity-5;
+}
+
+header nav a.active {
+  @apply bg-black text-white;
+}
+
+.help-nav {
+  @apply px-4 py-3 border border-solid rounded transition-all hover:bg-white hover:text-black;
+}
+
+nav .help-nav.active {
+  @apply bg-white text-black;
+}
+
+.question {
+  @apply bg-teal-50 text-white rounded-lg shadow-md px-4 py-3;
+}

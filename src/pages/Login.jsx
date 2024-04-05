@@ -9,7 +9,9 @@ const Login = () => {
   const submitHandler = (e) => {
     e.preventDefault();
 
+    // Kalo username sama password bener, redirect ke halaman home
     if (username == 'haikal' && password == '12345') {
+      // replace: true berfungsi agar user tidak bisa kembali ke halaman sebelumnya setelah ter-redirect
       navigate('/', { replace: true });
     } else {
       console.log('Username atau password salah');
@@ -17,21 +19,29 @@ const Login = () => {
   };
 
   return (
-    <div className='p-5'>
+    <div>
       <form onSubmit={submitHandler} className='flex flex-col gap-2'>
-        <input
-          onChange={(e) => setUsername(e.target.value)}
-          className='p-2 border border-black'
-          type='text'
-          placeholder='Username'
-        />
-        <input
-          onChange={(e) => setPassword(e.target.value)}
-          className='p-2 border border-black'
-          type='text'
-          placeholder='Password'
-        />
-        <button className='bg-red-300 p-2'>Login</button>
+        <div className='flex flex-col gap-0.5'>
+          <label>Username</label>
+          <input
+            onChange={(e) => setUsername(e.target.value)}
+            className='p-2 border border-black rounded text-black'
+            type='text'
+            placeholder='Username'
+          />
+        </div>
+        <div className='mt-2 flex flex-col gap-0.5'>
+          <label>Password</label>
+          <input
+            onChange={(e) => setPassword(e.target.value)}
+            className='p-2 border border-black rounded text-black'
+            type='password'
+            placeholder='Password'
+          />
+        </div>
+        <button className='mt-4 p-2 border-2 border-white text-white rounded transition-all hover:bg-white hover:text-black'>
+          Login
+        </button>
       </form>
     </div>
   );
