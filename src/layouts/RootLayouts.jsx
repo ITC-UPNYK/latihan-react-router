@@ -10,6 +10,7 @@ export const RootLayouts = () => {
               <NavLink to='/'>Home</NavLink>
               <NavLink to='about'>About</NavLink>
               <NavLink to='help'>Help</NavLink>
+              <NavLink to='users'>Users</NavLink>
               <NavLink to='login'>Login</NavLink>
             </div>
           </nav>
